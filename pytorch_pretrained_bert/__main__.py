@@ -1,4 +1,6 @@
 # coding: utf8
+import sys
+sys.path.append(".")
 def main():
     import sys
     if (len(sys.argv) != 4 and len(sys.argv) != 5) or sys.argv[1] not in [
