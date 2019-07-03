@@ -1194,11 +1194,13 @@ class BertForQuestionAnswering(BertPreTrainedModel):
         # self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self.classifier = nn.Linear(config.hidden_size, 2)
         self.apply(self.init_bert_weights)
-
+        
+    import torch    
+    device = torch.device("cuda")
     def forward(self, input_ids, token_type_ids=None, attention_mask=None, start_positions=None, end_positions=None):
-        input_ids=input_ids.to(self.device)
-        token_type_ids.to(self.device) 
-        attention_mask.to(self.device)
+        input_ids=input_ids.to(device)
+        token_type_ids.to(device) 
+        attention_mask.to(device)
         sequence_output, _ = self.bert(input_ids, token_type_ids, attention_mask, output_all_encoded_layers=False)
         logits = self.classifier(sequence_output)
         start_logits, end_logits = logits.split(1, dim=-1)
