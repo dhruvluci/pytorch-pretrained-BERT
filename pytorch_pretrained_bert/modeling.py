@@ -1196,6 +1196,9 @@ class BertForQuestionAnswering(BertPreTrainedModel):
         self.apply(self.init_bert_weights)
 
     def forward(self, input_ids, token_type_ids=None, attention_mask=None, start_positions=None, end_positions=None):
+        input_ids=input_ids.to(self.device)
+        token_type_ids.to(self.device) 
+        attention_mask.to(self.device)
         sequence_output, _ = self.bert(input_ids, token_type_ids, attention_mask, output_all_encoded_layers=False)
         logits = self.classifier(sequence_output)
         start_logits, end_logits = logits.split(1, dim=-1)
